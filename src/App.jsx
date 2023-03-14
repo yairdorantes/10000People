@@ -9,6 +9,8 @@ function App() {
   const [query, setQuery] = useState("");
   const [toEdit, setToEdit] = useState();
   const [Person, setPerson] = useState({});
+  const [newPerson, setNewPerson] = useState({});
+  const [add, setAdd] = useState(false);
   const searchInput = (e) => {
     e.preventDefault();
     const results = people.filter((person) =>
@@ -71,24 +73,21 @@ function App() {
     });
   }, []);
   const sendData = () => {
-    // axios
-    //   .post("http://127.0.0.1:8000/api/get-people", {
-    //     name: "yair",
-    //     age: "20",
-    //     email: "jaja",
-    //     phone: "72999",
-    //   })
-    //   .then((res) => {
-    //     alert(JSON.stringify(res.data));
-    //     console.log(res.data);
-    //   });
-    alert("😃 Haz pulsado un boton jajaja xdxd");
+    axios
+      .post("http://127.0.0.1:8000/api/get-people", newPerson)
+      .then((res) => {
+        // alert(JSON.stringify(res.data));
+        console.log(res.data);
+      });
   };
 
   return (
     <div className="">
       <div>
-        <button className="btn" onClick={sendData}>
+        <button
+          className="btn"
+          onClick={() => alert("😃 Haz pulsado un boton jajaja xdxd")}
+        >
           tester
         </button>
       </div>
@@ -293,6 +292,64 @@ function App() {
             </div>
           </div>
         )}
+      </div>
+      <div className="">
+        <div className="btn" onClick={() => setAdd(!add)}>
+          Añadir Persona
+        </div>
+        <div>
+          {add && (
+            <form
+              action="
+          "
+              className="flex items-center gap-2 mb-10 mt-10"
+            >
+              <label htmlFor="name">Nombre: </label>
+              <input
+                type="text"
+                id="name"
+                placeholder=""
+                className="input input-bordered w-32 max-w-xs"
+                onChange={(e) =>
+                  setNewPerson({ ...newPerson, name: e.target.value })
+                }
+              />
+              <label htmlFor="name">Edad: </label>
+              <input
+                type="text"
+                id="name"
+                placeholder=""
+                className="input input-bordered w-24 max-w-xs"
+                onChange={(e) =>
+                  setNewPerson({ ...newPerson, age: e.target.value })
+                }
+              />
+              <label htmlFor="name">Email: </label>
+              <input
+                type="text"
+                id="name"
+                placeholder=""
+                className="input input-bordered w-32 max-w-xs"
+                onChange={(e) =>
+                  setNewPerson({ ...newPerson, email: e.target.value })
+                }
+              />
+              <label htmlFor="name">Celular: </label>
+              <input
+                type="text"
+                id="name"
+                placeholder=""
+                className="input input-bordered w-32 max-w-xs"
+                onChange={(e) =>
+                  setNewPerson({ ...newPerson, phone: e.target.value })
+                }
+              />
+              <button className="btn btn-success" onClick={sendData}>
+                Enviar
+              </button>
+            </form>
+          )}
+        </div>
       </div>
       <div className="overflow-x-auto">
         <table className="table w-full">
